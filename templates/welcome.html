@@ -1,0 +1,53 @@
+{% extends "main-layout.html" %} 
+
+{% block meta %}
+<title>Welcome</title>
+{% endblock %} 
+
+{% block body %}
+  <div class="container mt-4">
+    <h3 class="text-center">Find your next Favourite book!</h3>
+    <!-- <h3 class="text-center h2 text-muted">Search and find out the best of the books</h3> -->
+    <form class="form-inline mx-auto mt-4 mx-w-900" action="{{ url_for('welcome') }}" method="POST">
+        <input class="form-control form-control-lg" type="text" name="text"
+          placeholder="Enter book's name, author or ISBN number" value="{{ input_value }}">
+        <button class="btn btn-primary btn-lg ">Search</button>
+      </form>
+        
+      {% if results %}
+      <h2 class=" my-3">Results:</h2>
+      <table class="table">
+        <thead>
+           <tr>
+              <th scope="col">ISBN</th>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">year</th>
+              <th scope="col">add book</th>
+           </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+              <tr>
+                
+                 <td scope="row">
+                    <a href="{{ url_for('book', isbn=result.isbn) }}">
+                     {{ result.isbn }}
+                    </a>
+                </td>
+               
+                 <td scope="row">{{ result.title }}</td>
+                 <td scope="row">{{ result.author }}</td>
+                 <td scope="row">{{ result.year }}</td> 
+                 <td scope="row"  ><a href="{{ url_for('cart', isbn=result.isbn, title=result.title, author=result.author, year=result.year) }}"><button name="addbook" value="addbook" class="btn btn-primary btn-s ">add book</button></a>
+                      </td>
+              </tr>
+           {% endfor %}
+        </tbody>
+     </table>
+
+      {% elif alert_message %}
+        <h4 class="alert alert-danger my-3 w-40 text-center mx-auto">{{ alert_message }}</h4>
+      {% endif %}
+  </div>
+{% endblock %}

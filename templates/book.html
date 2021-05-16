@@ -1,0 +1,90 @@
+{% extends "main-layout.html" %} 
+
+{% block meta %}
+<title>Books | {{ book.title }}</title>
+{% endblock %} 
+
+{% block body %}
+<div class="container mt-5">
+  <h5 class=" mb-5">Book info:</h5>
+  <!-- <ul class="list-group mx-w-1000 mx-auto font-size-20">
+    <li class="list-group-item p-3">
+      Title: {{ book.title }}
+    </li>
+    <li class="list-group-item p-3">
+      Author: {{ book.author }}
+    </li>
+    <li class="list-group-item p-3">
+      Publication year: {{ book.year }}
+    </li>
+    <li class="list-group-item p-3">
+      ISBN: {{ book.isbn }}
+    </li>
+
+  </ul> -->
+         
+  <table class="table">
+    <thead>
+       <tr>
+          <th scope="col">ISBN</th>
+          <th scope="col"> title</th>
+          <th scope="col">author</th>
+          <th scope="col">year</th>
+       </tr>
+    </thead>
+    <tbody>
+        
+          <tr>
+             <td scope="row">{{book.isbn }} </td>
+             <td scope="row">{{ book.title }}</td>
+             <td scope="row">{{ book.author }}</td>
+             <td scope="row">{{ book.year }}</td>
+          </tr>
+         
+    </tbody>
+ </table>
+  <h5 class="my-2 ">Write review:</h5>
+  {% if alert_message %}
+  <h5 class="alert alert-danger text-center mx-w-500 mx-auto">{{ alert_message }}</h5>
+  {% endif %}
+  <form action="" method="post"
+    class="mx-w-1000 mx-auto bg-white border rounded p-4 my-3">
+    <div class="form-group row">
+      <label for="rating" class="col-form-label col-sm-3 font-size-20">Rating</label>
+      <select name="rating" id="rating" class="form-control col-sm-1">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+    <div class="form-group row">
+      <label for="text" class="col-form-label col-sm-3 font-size-20">Add review</label>
+      <textarea name="text" id="text" rows="5" class="form-control col-sm-8" placeholder="Add your review"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary mx-auto d-block">write a review</button>
+  </form>
+  {% if reviews %}
+  <h4>Reviews</h4>
+ 
+    {% for review in reviews %}
+    <div class="card mx-w-500 mx-auto mb-3 text-center">
+     
+      <div class="card-body mb-1 mt-1">
+        <p class="card-subtitle mb-3 font-size-20" > {{ review.username }}</p> 
+        <p class="card-subtitle mb-3 font-size-20" >Rating: {{ review.rating }}</p>
+        <p class="card-subtitle mb-3 font-size-20" >Rating: {{ review.text  }}</p>
+        
+      </div>
+    </div>
+    {% endfor %}
+  
+  {% else %}
+  <h3 class="alert alert-danger text-center mx-w-500 mx-auto">No reviews yet</h3>
+  {% endif %}
+  <div class="spacing" style="height: 300px"></div>
+
+  <div class="spacing" style="height: 300px"></div>
+</div>
+{% endblock %}
